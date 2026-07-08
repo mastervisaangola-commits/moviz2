@@ -1,0 +1,6 @@
+{
+  "name": "Moviz TV",
+  "description": "Filmes, Séries e Desporto num só lugar.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
