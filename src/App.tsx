@@ -337,6 +337,173 @@ export default function App() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  // Render the iOS and universal installation modal helper to avoid code duplication
+  const renderIosGuideModal = () => (
+    <AnimatePresence>
+      {showIosGuide && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/95 backdrop-blur-md">
+          {/* Modal Backdrop Click-to-Dismiss */}
+          <div className="absolute inset-0" onClick={() => setShowIosGuide(false)} />
+
+          {/* Modal Body */}
+          <motion.div 
+            className="relative w-full sm:max-w-md bg-[#121212] border-t sm:border border-white/10 rounded-t-[24px] sm:rounded-[24px] p-6 text-left shadow-2xl overflow-hidden z-10"
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ type: 'spring', damping: 25, stiffness: 220 }}
+          >
+            {/* Close Button */}
+            <button 
+              onClick={() => setShowIosGuide(false)}
+              className="absolute top-4 right-4 text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition-colors cursor-pointer"
+            >
+              <X size={15} />
+            </button>
+
+            {/* Title Header */}
+            <div className="flex items-center space-x-3 mb-5 mt-1">
+              <div className="w-10 h-10 bg-[#0052FF]/10 rounded-xl flex items-center justify-center border border-[#0052FF]/20">
+                <Smartphone className="text-[#0052FF]" size={18} />
+              </div>
+              <div>
+                <h3 className="font-display font-bold text-base text-white">
+                  Instalar Moviz TV
+                </h3>
+                <p className="text-[11px] text-neutral-400">
+                  Instale no seu dispositivo em segundos.
+                </p>
+              </div>
+            </div>
+
+            {/* Tab Selector for maximum multi-device clarity */}
+            <div className="flex bg-black/40 p-1 rounded-xl border border-white/5 mb-5">
+              <button
+                type="button"
+                onClick={() => setActiveInstallTab('android')}
+                className={`flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                  activeInstallTab === 'android'
+                    ? 'bg-[#0052FF] text-white'
+                    : 'text-neutral-400 hover:text-white'
+                }`}
+              >
+                Android / Chrome
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveInstallTab('ios')}
+                className={`flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all cursor-pointer ${
+                  activeInstallTab === 'ios'
+                    ? 'bg-[#0052FF] text-white'
+                    : 'text-neutral-400 hover:text-white'
+                }`}
+              >
+                iPhone / iOS
+              </button>
+            </div>
+
+            {/* Step By Step Instructions */}
+            <div className="space-y-3.5 my-5">
+              
+              {activeInstallTab === 'android' ? (
+                <>
+                  {/* Step 1: Open Menu */}
+                  <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
+                    <div className="w-7 h-7 rounded-lg bg-[#0052FF]/10 border border-[#0052FF]/20 flex items-center justify-center text-white shrink-0">
+                      <Plus size={14} className="text-[#0052FF]" />
+                    </div>
+                    <div className="ml-3.5">
+                      <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 1</span>
+                      <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
+                        Toque no ícone de <strong className="text-white">Opções/Menu</strong> (três pontos <strong className="text-white">⋮</strong> ou linhas) no canto do seu navegador (Chrome/Samsung).
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 2: Install button */}
+                  <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
+                    <div className="w-7 h-7 rounded-lg bg-[#0052FF]/10 border border-[#0052FF]/20 flex items-center justify-center text-white shrink-0">
+                      <Download size={14} className="text-[#0052FF]" />
+                    </div>
+                    <div className="ml-3.5">
+                      <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 2</span>
+                      <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
+                        Selecione a opção <strong className="text-white">Instalar Aplicativo</strong> ou <strong className="text-white">Adicionar ao Ecrã Principal</strong>.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 3: Finish */}
+                  <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
+                    <div className="w-7 h-7 rounded-lg bg-[#00E676]/10 border border-[#00E676]/20 flex items-center justify-center text-white shrink-0">
+                      <CheckCircle size={14} className="text-[#00E676]" />
+                    </div>
+                    <div className="ml-3.5">
+                      <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 3</span>
+                      <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
+                        Confirme clicando em <strong className="text-[#00E676]">Instalar</strong> para criar o atalho nativo automaticamente na tela do seu telemóvel!
+                      </p>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <>
+                  {/* Step 1: Share Icon */}
+                  <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
+                    <div className="w-7 h-7 rounded-lg bg-[#0052FF]/10 border border-[#0052FF]/20 flex items-center justify-center text-white shrink-0">
+                      <Share size={14} className="text-[#0052FF]" />
+                    </div>
+                    <div className="ml-3.5">
+                      <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 1</span>
+                      <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
+                        No Safari ou navegador do iPhone, clique em <strong className="text-white">Partilhar</strong> (ícone de seta para cima).
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 2: Add to Home Screen Icon */}
+                  <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
+                    <div className="w-7 h-7 rounded-lg bg-[#0052FF]/10 border border-[#0052FF]/20 flex items-center justify-center text-white shrink-0">
+                      <Plus size={14} className="text-[#0052FF]" />
+                    </div>
+                    <div className="ml-3.5">
+                      <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 2</span>
+                      <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
+                        Role para baixo e selecione a opção <strong className="text-white">Adicionar ao Ecrã Principal</strong> (ou <strong className="text-white">Add to Home Screen</strong>).
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Step 3: Finish */}
+                  <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
+                    <div className="w-7 h-7 rounded-lg bg-[#00E676]/10 border border-[#00E676]/20 flex items-center justify-center text-white shrink-0">
+                      <CheckCircle size={14} className="text-[#00E676]" />
+                    </div>
+                    <div className="ml-3.5">
+                      <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 3</span>
+                      <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
+                        Confirme clicando em <strong className="text-[#00E676]">Adicionar</strong> no canto superior direito para finalizar!
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
+
+            </div>
+
+            {/* Dismiss Button */}
+            <button
+              onClick={() => setShowIosGuide(false)}
+              className="w-full bg-[#1c1c1e] hover:bg-[#2c2c2e] text-white font-bold py-3.5 px-6 rounded-xl transition-all cursor-pointer text-xs uppercase tracking-wider font-display"
+            >
+              Concluir
+            </button>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+
   if (!isUnlocked) {
     return (
       <div className="relative min-h-screen bg-[#000000] text-white flex flex-col justify-center items-center px-6 py-12 overflow-x-hidden font-sans selection:bg-[#0052FF]/30">
@@ -445,11 +612,60 @@ export default function App() {
             </form>
           </motion.div>
 
+          {/* Unified PWA Persistent Installation Zone on Lock Screen */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            className="w-full mt-6 bg-[#121212]/90 border border-white/5 rounded-3xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0052FF]/2 to-transparent pointer-events-none" />
+            
+            <h4 className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider font-mono mb-4 text-center relative z-10">
+              Instalar Aplicativo Oficial
+            </h4>
+
+            {isInstalled ? (
+              <div className="flex items-center justify-center space-x-2 bg-[#121212]/90 border border-[#00E676]/20 px-5 py-2.5 rounded-full text-xs text-[#00E676] font-medium tracking-wide shadow-lg mx-auto w-max relative z-10">
+                <CheckCircle size={14} className="text-[#00E676]" />
+                <span className="font-mono">✓ Moviz TV Instalada com Sucesso</span>
+              </div>
+            ) : (
+              <div className="w-full space-y-3 relative z-10">
+                <button
+                  type="button"
+                  id="install-pwa-button-unified-lock"
+                  onClick={handleInstallClickUnified}
+                  className="w-full flex items-center justify-center space-x-3 bg-gradient-to-r from-[#0052FF] to-[#0039B3] text-white font-bold py-4.5 px-6 rounded-2xl shadow-lg hover:brightness-110 active:scale-[0.98] transition-all duration-200 cursor-pointer text-sm tracking-wide font-display border border-[#0052FF]/30 group"
+                >
+                  <Download size={18} className="text-white group-hover:translate-y-0.5 transition-transform duration-200" />
+                  <span className="font-display tracking-widest uppercase font-extrabold text-[13px]">
+                    INSTALAR NO TELEFONE
+                  </span>
+                </button>
+                
+                <div className="text-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowIosGuide(true)}
+                    className="inline-flex items-center space-x-1.5 text-neutral-400 hover:text-white transition-colors text-xs font-mono py-1 cursor-pointer"
+                  >
+                    <HelpCircle size={14} className="text-[#0052FF]" />
+                    <span>Como instalar passo a passo?</span>
+                  </button>
+                </div>
+              </div>
+            )}
+          </motion.div>
+
           <p className="text-[10px] text-neutral-600 font-mono tracking-wider mt-8 text-center leading-relaxed">
             Se não possui uma chave secreta válida de acesso,<br />
             entre em contacto com o administrador do sistema.
           </p>
         </main>
+
+        {/* Modal is also rendered in the locked context for instant visual support */}
+        {renderIosGuideModal()}
       </div>
     );
   }
@@ -595,7 +811,7 @@ export default function App() {
           {/* BUTTON 2: SÉRIES E FILMES IPHONE */}
           <motion.button
             id="btn-iphone-app"
-            onClick={() => openInAppBrowser("https://drive.google.com/file/d/1AAesq2CwzqT0p0kk1UifSRysEQDP-08Q/view?usp=sharing", "Séries e Filmes iPhone")}
+            onClick={() => openInAppBrowser("https://apps.apple.com/ao/app/comp-study-farm-manager/id6756660667", "Séries e Filmes iPhone")}
             className="w-full text-left cursor-pointer group flex items-center bg-[#121212]/90 border border-white/5 rounded-2xl p-4.5 hover:bg-[#161616] hover:border-[#0052FF]/60 hover:scale-[1.02] transition-all duration-300 ease-out active:scale-[0.98] block relative overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
@@ -721,169 +937,9 @@ export default function App() {
       </main>
 
       {/* iOS & UNIVERSAL INSTALLATION MODAL / BOTTOM SHEET */}
-      <AnimatePresence>
-        {showIosGuide && (
-          <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/95 backdrop-blur-md">
-            {/* Modal Backdrop Click-to-Dismiss */}
-            <div className="absolute inset-0" onClick={() => setShowIosGuide(false)} />
+      {renderIosGuideModal()}
 
-            {/* Modal Body */}
-            <motion.div 
-              className="relative w-full sm:max-w-md bg-[#121212] border-t sm:border border-white/10 rounded-t-[24px] sm:rounded-[24px] p-6 text-left shadow-2xl overflow-hidden z-10"
-              initial={{ y: '100%' }}
-              animate={{ y: 0 }}
-              exit={{ y: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-            >
-              {/* Close Button */}
-              <button 
-                onClick={() => setShowIosGuide(false)}
-                className="absolute top-4 right-4 text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition-colors cursor-pointer"
-              >
-                <X size={15} />
-              </button>
 
-              {/* Title Header */}
-              <div className="flex items-center space-x-3 mb-5 mt-1">
-                <div className="w-10 h-10 bg-[#0052FF]/10 rounded-xl flex items-center justify-center border border-[#0052FF]/20">
-                  <Smartphone className="text-[#0052FF]" size={18} />
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-base text-white">
-                    Instalar Moviz TV
-                  </h3>
-                  <p className="text-[11px] text-neutral-400">
-                    Instale no seu dispositivo em segundos.
-                  </p>
-                </div>
-              </div>
-
-              {/* Tab Selector for maximum multi-device clarity */}
-              <div className="flex bg-black/40 p-1 rounded-xl border border-white/5 mb-5">
-                <button
-                  type="button"
-                  onClick={() => setActiveInstallTab('android')}
-                  className={`flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                    activeInstallTab === 'android'
-                      ? 'bg-[#0052FF] text-white'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  Android / Chrome
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveInstallTab('ios')}
-                  className={`flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all cursor-pointer ${
-                    activeInstallTab === 'ios'
-                      ? 'bg-[#0052FF] text-white'
-                      : 'text-neutral-400 hover:text-white'
-                  }`}
-                >
-                  iPhone / iOS
-                </button>
-              </div>
-
-              {/* Step By Step Instructions */}
-              <div className="space-y-3.5 my-5">
-                
-                {activeInstallTab === 'android' ? (
-                  <>
-                    {/* Step 1: Open Menu */}
-                    <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
-                      <div className="w-7 h-7 rounded-lg bg-[#0052FF]/10 border border-[#0052FF]/20 flex items-center justify-center text-white shrink-0">
-                        <Plus size={14} className="text-[#0052FF]" />
-                      </div>
-                      <div className="ml-3.5">
-                        <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 1</span>
-                        <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
-                          Toque no ícone de <strong className="text-white">Opções/Menu</strong> (três pontos <strong className="text-white">⋮</strong> ou linhas) no canto do seu navegador (Chrome/Samsung).
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Step 2: Install button */}
-                    <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
-                      <div className="w-7 h-7 rounded-lg bg-[#0052FF]/10 border border-[#0052FF]/20 flex items-center justify-center text-white shrink-0">
-                        <Download size={14} className="text-[#0052FF]" />
-                      </div>
-                      <div className="ml-3.5">
-                        <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 2</span>
-                        <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
-                          Selecione a opção <strong className="text-white">Instalar Aplicativo</strong> ou <strong className="text-white">Adicionar ao Ecrã Principal</strong>.
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Step 3: Finish */}
-                    <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
-                      <div className="w-7 h-7 rounded-lg bg-[#00E676]/10 border border-[#00E676]/20 flex items-center justify-center text-white shrink-0">
-                        <CheckCircle size={14} className="text-[#00E676]" />
-                      </div>
-                      <div className="ml-3.5">
-                        <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 3</span>
-                        <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
-                          Confirme clicando em <strong className="text-[#00E676]">Instalar</strong> para criar o atalho nativo automaticamente na tela do seu telemóvel!
-                        </p>
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {/* Step 1: Share Icon */}
-                    <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
-                      <div className="w-7 h-7 rounded-lg bg-[#0052FF]/10 border border-[#0052FF]/20 flex items-center justify-center text-white shrink-0">
-                        <Share size={14} className="text-[#0052FF]" />
-                      </div>
-                      <div className="ml-3.5">
-                        <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 1</span>
-                        <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
-                          No Safari ou navegador do iPhone, clique em <strong className="text-white">Partilhar</strong> (ícone de seta para cima).
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Step 2: Add to Home Screen Icon */}
-                    <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
-                      <div className="w-7 h-7 rounded-lg bg-[#0052FF]/10 border border-[#0052FF]/20 flex items-center justify-center text-white shrink-0">
-                        <Plus size={14} className="text-[#0052FF]" />
-                      </div>
-                      <div className="ml-3.5">
-                        <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 2</span>
-                        <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
-                          Role para baixo e selecione a opção <strong className="text-white">Adicionar ao Ecrã Principal</strong> (ou <strong className="text-white">Add to Home Screen</strong>).
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Step 3: Finish */}
-                    <div className="flex items-start bg-black/40 p-4 rounded-xl border border-white/5">
-                      <div className="w-7 h-7 rounded-lg bg-[#00E676]/10 border border-[#00E676]/20 flex items-center justify-center text-white shrink-0">
-                        <CheckCircle size={14} className="text-[#00E676]" />
-                      </div>
-                      <div className="ml-3.5">
-                        <span className="block text-[10px] font-bold text-neutral-500 uppercase tracking-wider">Passo 3</span>
-                        <p className="text-xs text-neutral-200 mt-0.5 leading-relaxed">
-                          Confirme clicando em <strong className="text-[#00E676]">Adicionar</strong> no canto superior direito para finalizar!
-                        </p>
-                      </div>
-                    </div>
-                  </>
-                )}
-
-              </div>
-
-              {/* Dismiss Button */}
-              <button
-                onClick={() => setShowIosGuide(false)}
-                className="w-full bg-[#1c1c1e] hover:bg-[#2c2c2e] text-white font-bold py-3.5 px-6 rounded-xl transition-all cursor-pointer text-xs uppercase tracking-wider font-display"
-              >
-                Concluir
-              </button>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
 
       {/* 2. IN-APP STREAMING PLAYER OVERLAY */}
       <AnimatePresence>
