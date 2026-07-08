@@ -332,11 +332,9 @@ export default function App() {
     }
   };
 
-  // Open a URL directly inside the application in an app-style viewport
-  const openInAppBrowser = (url: string, title: string) => {
-    setActiveUrl(url);
-    setActiveTitle(title);
-    setIframeLoading(true);
+  // Open a URL directly in a new tab/window (Linktree style)
+  const openInAppBrowser = (url: string, _title: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   if (!isUnlocked) {
