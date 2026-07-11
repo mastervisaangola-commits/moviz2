@@ -22,7 +22,13 @@ import {
   Eye,
   EyeOff,
   Clipboard,
-  ShieldAlert
+  ShieldAlert,
+  Play,
+  Info,
+  Search,
+  Bell,
+  ThumbsUp,
+  ThumbsDown
 } from 'lucide-react';
 
 // --- MODULAR LOGO COMPONENT ---
@@ -207,6 +213,8 @@ export default function App() {
   const [secretInput, setSecretInput] = useState<string>('');
   const [unlockError, setUnlockError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showUnlockScreen, setShowUnlockScreen] = useState<boolean>(false);
+  const [showCheckoutModal, setShowCheckoutModal] = useState<boolean>(false);
 
   // Navigation & Screen states
   const [showSplash, setShowSplash] = useState<boolean>(true);
@@ -504,11 +512,244 @@ export default function App() {
     </AnimatePresence>
   );
 
+  // Render the secure Vanqir checkout inside a seamless iframe modal overlay
+  const renderCheckoutModal = () => (
+    <AnimatePresence>
+      {showCheckoutModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-0 sm:p-4 bg-black/95 backdrop-blur-md">
+          {/* Backdrop Click-to-Dismiss */}
+          <div className="absolute inset-0 bg-black/40" onClick={() => setShowCheckoutModal(false)} />
+          
+          {/* Modal Container */}
+          <motion.div 
+            className="relative w-full h-full sm:h-[85vh] sm:max-w-4xl bg-[#080808] border-t sm:border border-white/10 rounded-t-[24px] sm:rounded-[24px] overflow-hidden z-10 flex flex-col shadow-2xl"
+            initial={{ opacity: 0, scale: 0.95, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 30 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Modal header */}
+            <div className="flex items-center justify-between px-6 py-4.5 bg-[#121212] border-b border-white/5 shrink-0">
+              <div className="flex items-center space-x-2.5">
+                <div className="w-2 h-2 rounded-full bg-[#00E676] animate-pulse" />
+                <span className="text-[10px] font-mono text-neutral-400 tracking-widest uppercase">Pagamento Oficial Integrado e Seguro</span>
+              </div>
+              <button 
+                onClick={() => setShowCheckoutModal(false)}
+                className="text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 p-2 rounded-full transition-all cursor-pointer"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            
+            {/* IFrame containing Vanqir checkout */}
+            <div className="flex-1 w-full relative bg-[#000]">
+              <iframe
+                src="https://pay.vanqir.com/checkout/85f3111d-fb7d-4a73-9a39-a7545e434202"
+                className="w-full h-full border-0"
+                title="Checkout Seguro Moviz TV"
+                allow="payment; clipboard-write"
+              />
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+
   if (!isUnlocked) {
+    if (!showUnlockScreen) {
+      // PREMIUM MINIMALIST SALES LANDING PAGE (Netflix Inspired Layout)
+      return (
+        <div className="relative min-h-screen bg-[#000000] text-white flex flex-col overflow-x-hidden font-sans selection:bg-[#E50914]/30">
+          
+          {/* HEADER BAR */}
+          <header className="absolute top-0 left-0 w-full z-30 bg-gradient-to-b from-black/90 to-transparent px-6 py-4 sm:px-12 flex items-center justify-between">
+            <div className="flex items-center space-x-8">
+              <h1 className="text-[#E50914] font-display font-black text-2xl tracking-[0.1em] select-none uppercase cursor-pointer">
+                MOVIZ TV
+              </h1>
+              
+              {/* Minimalist Navigation Links (like Netflix image) */}
+              <nav className="hidden md:flex items-center space-x-6 text-[11px] font-bold text-neutral-300 tracking-wider">
+                <span className="hover:text-white transition-colors cursor-pointer text-white">INICIO</span>
+                <span className="hover:text-white transition-colors cursor-pointer">SERIES</span>
+                <span className="hover:text-white transition-colors cursor-pointer">PELICULAS</span>
+                <span className="hover:text-white transition-colors cursor-pointer">NOVEDADES</span>
+              </nav>
+            </div>
+
+            {/* Right side utilities */}
+            <div className="flex items-center space-x-6 text-neutral-300">
+              <Search size={18} className="cursor-pointer hover:text-white transition-colors" />
+              <Bell size={18} className="cursor-pointer hover:text-white transition-colors" />
+              
+              <button 
+                onClick={() => setShowUnlockScreen(true)}
+                className="bg-[#E50914] text-white text-xs font-bold px-4 py-2 rounded-md hover:brightness-110 active:scale-[0.97] transition-all cursor-pointer font-display tracking-wider"
+              >
+                ENTRAR
+              </button>
+            </div>
+          </header>
+
+          {/* HERO SECTION */}
+          <section className="relative min-h-[92vh] w-full flex flex-col justify-end px-6 sm:px-12 pb-16 pt-36 overflow-hidden">
+            {/* Breathtaking Ocean Sunset Silhouette Couple backdrop (replicates reference style) */}
+            <div 
+              className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=1920')] bg-cover bg-center"
+              style={{ backgroundPosition: '50% 35%' }}
+            />
+            {/* Cinematic dark vignette layers to ensure maximum text readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+            
+            {/* Hero Main Content Box */}
+            <div className="relative z-10 max-w-2xl text-left">
+              {/* Top Rating Tag */}
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="bg-[#E50914] text-white text-[9px] font-black tracking-widest px-2 py-0.5 rounded-sm uppercase">
+                  TOP 10
+                </div>
+                <span className="text-[10px] font-bold text-white tracking-widest uppercase font-mono">
+                  #1 EM ANGOLA ESTA SEMANA
+                </span>
+              </div>
+
+              {/* Display Title */}
+              <h2 className="font-serif font-black text-5xl sm:text-7xl tracking-wide text-white mb-5 uppercase leading-[0.95] drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]">
+                MOVIZ TV
+              </h2>
+
+              {/* Poetic description from reference image inspired format */}
+              <p className="text-xs sm:text-sm text-neutral-200 leading-relaxed max-w-xl mb-8 drop-shadow-[0_2px_8px_rgba(0,0,0,0.8)]">
+                Num rincão de entretenimento onde os limites se dissolvem. Canais ao vivo cobiçados, séries exclusivas de streamings globais e lançamentos diretos do cinema. Desenvolvido com elegância absoluta para funcionar diretamente no seu telefone, TV ou computador, sem interrupções e com a máxima fidelidade audiovisual.
+              </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-4">
+                {/* REPRODUCIR / COMEÇAR AGORA BUTTON */}
+                <button
+                  onClick={() => setShowUnlockScreen(true)}
+                  className="flex items-center justify-center space-x-3 bg-white hover:bg-neutral-200 text-black font-extrabold py-3.5 px-8 rounded-md shadow-2xl active:scale-[0.98] transition-all duration-200 cursor-pointer text-xs uppercase tracking-widest font-display"
+                >
+                  <Play size={16} fill="black" className="text-black" />
+                  <span>REPRODUCIR</span>
+                </button>
+
+                {/* ADQUIRIR ACESSO BUTTON */}
+                <button
+                  onClick={() => setShowCheckoutModal(true)}
+                  className="flex items-center justify-center space-x-3 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-extrabold py-3.5 px-8 rounded-md active:scale-[0.98] transition-all duration-200 cursor-pointer text-xs uppercase tracking-widest font-display backdrop-blur-md"
+                >
+                  <Plus size={16} />
+                  <span>ADQUIRIR ACESSO</span>
+                </button>
+              </div>
+            </div>
+          </section>
+
+          {/* LO MAS BUSCADO / MOST SEARCHED SECTION */}
+          <section className="bg-black w-full pt-10 pb-20">
+            <h3 className="font-display font-black text-neutral-400 text-[11px] tracking-[0.25em] uppercase mb-6 px-6 sm:px-12 max-w-6xl mx-auto">
+              LO MAS BUSCADO
+            </h3>
+            
+            {/* Vertical Posters Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 px-6 sm:px-12 max-w-6xl mx-auto">
+              
+              {/* Poster 1 */}
+              <div className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#E50914]/40 hover:scale-[1.03] transition-all duration-300">
+                <img 
+                  src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=500&auto=format&fit=crop" 
+                  alt="Horizonte de Ação" 
+                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                  <span className="text-[9px] font-mono font-bold text-[#E50914] uppercase tracking-wider mb-0.5">AÇÃO / SCIFI</span>
+                  <p className="text-xs font-bold text-white leading-tight">Horizonte Perdido</p>
+                </div>
+              </div>
+
+              {/* Poster 2 */}
+              <div className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#E50914]/40 hover:scale-[1.03] transition-all duration-300">
+                <img 
+                  src="https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=500&auto=format&fit=crop" 
+                  alt="Pôr de Sol Romance" 
+                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                  <span className="text-[9px] font-mono font-bold text-[#E50914] uppercase tracking-wider mb-0.5">ROMANCE / DRAMA</span>
+                  <p className="text-xs font-bold text-white leading-tight">O Encontro</p>
+                </div>
+              </div>
+
+              {/* Poster 3 */}
+              <div className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#E50914]/40 hover:scale-[1.03] transition-all duration-300">
+                <img 
+                  src="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=500&auto=format&fit=crop" 
+                  alt="Horizonte de Aventura" 
+                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                  <span className="text-[9px] font-mono font-bold text-[#E50914] uppercase tracking-wider mb-0.5">SUSPENSE / THRILLER</span>
+                  <p className="text-xs font-bold text-white leading-tight">Sombras no Escuro</p>
+                </div>
+              </div>
+
+              {/* Poster 4 */}
+              <div className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#E50914]/40 hover:scale-[1.03] transition-all duration-300">
+                <img 
+                  src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=500&auto=format&fit=crop" 
+                  alt="Noite de Estreia" 
+                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                  <span className="text-[9px] font-mono font-bold text-[#E50914] uppercase tracking-wider mb-0.5">CLÁSSICO / CINEMA</span>
+                  <p className="text-xs font-bold text-white leading-tight">Noite de Estreia</p>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Netflix-style footer original credits line */}
+            <div className="mt-16 flex items-center justify-center space-x-3 text-neutral-600">
+              <span className="text-2xl font-black text-[#E50914] tracking-tighter">M</span>
+              <span className="text-[10px] font-bold tracking-[0.25em] uppercase font-mono">
+                ORIGINAL MOVIZ TV desde 2024
+              </span>
+            </div>
+          </section>
+
+          {/* Secure embedded payment checkout modal */}
+          {renderCheckoutModal()}
+
+          {/* Universal step guide modal */}
+          {renderIosGuideModal()}
+        </div>
+      );
+    }
+
+    // SECURITY UNLOCK SCREEN
     return (
-      <div className="relative min-h-screen bg-[#000000] text-white flex flex-col justify-center items-center px-6 py-12 overflow-x-hidden font-sans selection:bg-[#0052FF]/30">
+      <div className="relative min-h-screen bg-[#000000] text-white flex flex-col justify-center items-center px-6 py-12 overflow-x-hidden font-sans selection:bg-[#E50914]/30">
+        
+        {/* BACK TO LANDING PAGE BUTTON */}
+        <button
+          type="button"
+          onClick={() => setShowUnlockScreen(false)}
+          className="absolute top-6 left-6 flex items-center space-x-2 text-neutral-400 hover:text-white transition-colors text-xs font-mono py-2 px-3.5 bg-neutral-900/50 border border-white/5 hover:border-white/10 rounded-full backdrop-blur-md cursor-pointer transition-all"
+        >
+          <ArrowLeft size={14} />
+          <span>VOLTAR</span>
+        </button>
+
         {/* BACKGROUND DECORATIVE ELEMENTS - COBALT BLUE RADIAL VIGNETTE */}
-        <div className="absolute top-[-10%] left-[-20%] w-[140%] h-[70%] bg-[radial-gradient(circle_at_center,_rgba(0,82,255,0.11)_0%,_rgba(0,0,0,0)_75%)] pointer-events-none z-0" />
+        <div className="absolute top-[-10%] left-[-20%] w-[140%] h-[70%] bg-[radial-gradient(circle_at_center,_rgba(0,82,255,0.08)_0%,_rgba(0,0,0,0)_75%)] pointer-events-none z-0" />
         <div className="absolute bottom-[-10%] right-[-20%] w-[140%] h-[60%] bg-[radial-gradient(circle_at_center,_rgba(0,230,118,0.02)_0%,_rgba(0,0,0,0)_70%)] pointer-events-none z-0" />
 
         <main className="relative z-10 max-w-md w-full mx-auto flex flex-col items-center">
@@ -517,7 +758,7 @@ export default function App() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="w-24 h-24 bg-black border border-white/10 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(0,82,255,0.15)] mb-6"
+            className="w-24 h-24 bg-black border border-white/10 rounded-full flex items-center justify-center shadow-[0_0_25px_rgba(0,82,255,0.12)] mb-6"
           >
             <MovizLogo size={62} />
           </motion.div>
@@ -541,7 +782,7 @@ export default function App() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
-            className="w-full bg-[#121212]/90 border border-white/5 rounded-3xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden"
+            className="w-full bg-[#121212]/90 border border-white/5 rounded-3xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden mb-6"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-[#0052FF]/2 to-transparent pointer-events-none" />
             
@@ -551,14 +792,14 @@ export default function App() {
               </div>
               <div>
                 <h3 className="font-display font-bold text-sm text-white">Desbloquear Aplicação</h3>
-                <p className="text-[10px] text-neutral-400 font-mono tracking-wider">Acesso Privado Autorizado</p>
+                <p className="text-[10px] text-neutral-400 font-mono tracking-wider">Insira a sua chave de acesso</p>
               </div>
             </div>
 
             <form onSubmit={handleUnlockSubmit} className="space-y-5 relative z-10">
               <div className="space-y-2">
                 <label className="block text-[10px] font-bold text-neutral-400 uppercase tracking-wider font-mono">
-                  Insira a Chave Secreta
+                  Sua Chave Secreta
                 </label>
                 
                 <div className="relative rounded-2xl bg-black border border-white/5 focus-within:border-[#0052FF]/50 transition-all duration-300">
@@ -570,7 +811,7 @@ export default function App() {
                       setUnlockError(null);
                     }}
                     placeholder="Cole ou escreva a sua chave de acesso aqui..."
-                    className="w-full bg-transparent px-4 py-3.5 pr-12 text-xs font-mono text-neutral-200 outline-none placeholder:text-neutral-600 resize-none rounded-2xl"
+                    className="w-full bg-transparent px-4 py-3.5 pr-12 text-xs font-mono text-neutral-200 outline-none placeholder:text-neutral-600 resize-none rounded-2xl animate-none"
                   />
                   
                   {/* Lock Indicator inside input area */}
@@ -612,12 +853,29 @@ export default function App() {
             </form>
           </motion.div>
 
+          {/* DYNAMIC SECURE ACQUIRE KEY BUTTON */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.6 }}
+            className="w-full mb-6"
+          >
+            <button
+              type="button"
+              onClick={() => setShowCheckoutModal(true)}
+              className="w-full flex items-center justify-center space-x-3 bg-gradient-to-r from-[#00E676] to-[#00B259] text-black font-extrabold py-4 px-6 rounded-2xl shadow-xl hover:brightness-110 active:scale-[0.98] transition-all duration-200 cursor-pointer text-xs tracking-wider font-display uppercase"
+            >
+              <Key size={16} className="text-black" />
+              <span>Adquirir Chave de Acesso</span>
+            </button>
+          </motion.div>
+
           {/* Unified PWA Persistent Installation Zone on Lock Screen */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="w-full mt-6 bg-[#121212]/90 border border-white/5 rounded-3xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden"
+            className="w-full bg-[#121212]/90 border border-white/5 rounded-3xl p-6 shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-md relative overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-b from-[#0052FF]/2 to-transparent pointer-events-none" />
             
@@ -663,6 +921,9 @@ export default function App() {
             entre em contacto com o administrador do sistema.
           </p>
         </main>
+
+        {/* Embedded checkout portal for fast access */}
+        {renderCheckoutModal()}
 
         {/* Modal is also rendered in the locked context for instant visual support */}
         {renderIosGuideModal()}
