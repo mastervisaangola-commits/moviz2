@@ -559,14 +559,14 @@ export default function App() {
 
   if (!isUnlocked) {
     if (!showUnlockScreen) {
-      // PREMIUM MINIMALIST SALES LANDING PAGE (Netflix Inspired Layout)
+      // PREMIUM MINIMALIST SALES LANDING PAGE (Netflix Inspired Layout but with Blue branding)
       return (
-        <div className="relative min-h-screen bg-[#000000] text-white flex flex-col overflow-x-hidden font-sans selection:bg-[#E50914]/30">
+        <div className="relative min-h-screen bg-[#000000] text-white flex flex-col overflow-x-hidden font-sans selection:bg-[#0052FF]/30">
           
           {/* HEADER BAR */}
           <header className="absolute top-0 left-0 w-full z-30 bg-gradient-to-b from-black/90 to-transparent px-6 py-4 sm:px-12 flex items-center justify-between">
             <div className="flex items-center space-x-8">
-              <h1 className="text-[#E50914] font-display font-black text-2xl tracking-[0.1em] select-none uppercase cursor-pointer">
+              <h1 className="text-[#0052FF] font-display font-black text-2xl tracking-[0.1em] select-none uppercase cursor-pointer">
                 MOVIZ TV
               </h1>
               
@@ -586,7 +586,7 @@ export default function App() {
               
               <button 
                 onClick={() => setShowUnlockScreen(true)}
-                className="bg-[#E50914] text-white text-xs font-bold px-4 py-2 rounded-md hover:brightness-110 active:scale-[0.97] transition-all cursor-pointer font-display tracking-wider"
+                className="bg-[#0052FF] text-white text-xs font-bold px-4 py-2 rounded-md hover:brightness-110 active:scale-[0.97] transition-all cursor-pointer font-display tracking-wider"
               >
                 ENTRAR
               </button>
@@ -608,7 +608,7 @@ export default function App() {
             <div className="relative z-10 max-w-2xl text-left">
               {/* Top Rating Tag */}
               <div className="flex items-center space-x-2 mb-4">
-                <div className="bg-[#E50914] text-white text-[9px] font-black tracking-widest px-2 py-0.5 rounded-sm uppercase">
+                <div className="bg-[#0052FF] text-white text-[9px] font-black tracking-widest px-2 py-0.5 rounded-sm uppercase">
                   TOP 10
                 </div>
                 <span className="text-[10px] font-bold text-white tracking-widest uppercase font-mono">
@@ -650,75 +650,293 @@ export default function App() {
           </section>
 
           {/* LO MAS BUSCADO / MOST SEARCHED SECTION */}
-          <section className="bg-black w-full pt-10 pb-20">
-            <h3 className="font-display font-black text-neutral-400 text-[11px] tracking-[0.25em] uppercase mb-6 px-6 sm:px-12 max-w-6xl mx-auto">
-              LO MAS BUSCADO
-            </h3>
+          <section className="bg-black w-full pt-12 pb-24 space-y-16">
             
-            {/* Vertical Posters Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 px-6 sm:px-12 max-w-6xl mx-auto">
+            {/* CATEGORY 1: FILMES E SÉRIES EM DESTAQUE */}
+            <div className="px-6 sm:px-12 max-w-6xl mx-auto">
+              <h3 className="font-display font-black text-neutral-400 text-[11px] tracking-[0.25em] uppercase mb-6 flex items-center justify-between">
+                <span>FILMES E SÉRIES EM DESTAQUE</span>
+                <span className="text-[9px] text-[#0052FF] font-mono tracking-wider">VER TODOS</span>
+              </h3>
               
-              {/* Poster 1 */}
-              <div className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#E50914]/40 hover:scale-[1.03] transition-all duration-300">
-                <img 
-                  src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=500&auto=format&fit=crop" 
-                  alt="Horizonte de Ação" 
-                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
-                  <span className="text-[9px] font-mono font-bold text-[#E50914] uppercase tracking-wider mb-0.5">AÇÃO / SCIFI</span>
-                  <p className="text-xs font-bold text-white leading-tight">Horizonte Perdido</p>
+              {/* Vertical Posters Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                
+                {/* Poster 1 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=500&auto=format&fit=crop" 
+                    alt="Horizonte de Ação" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">AÇÃO / SCIFI</span>
+                    <p className="text-xs font-bold text-white leading-tight">Horizonte Perdido</p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Poster 2 */}
-              <div className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#E50914]/40 hover:scale-[1.03] transition-all duration-300">
-                <img 
-                  src="https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=500&auto=format&fit=crop" 
-                  alt="Pôr de Sol Romance" 
-                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
-                  <span className="text-[9px] font-mono font-bold text-[#E50914] uppercase tracking-wider mb-0.5">ROMANCE / DRAMA</span>
-                  <p className="text-xs font-bold text-white leading-tight">O Encontro</p>
+                {/* Poster 2 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1519046904884-53103b34b206?q=80&w=500&auto=format&fit=crop" 
+                    alt="Pôr de Sol Romance" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">ROMANCE / DRAMA</span>
+                    <p className="text-xs font-bold text-white leading-tight">O Encontro</p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Poster 3 */}
-              <div className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#E50914]/40 hover:scale-[1.03] transition-all duration-300">
-                <img 
-                  src="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=500&auto=format&fit=crop" 
-                  alt="Horizonte de Aventura" 
-                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
-                  <span className="text-[9px] font-mono font-bold text-[#E50914] uppercase tracking-wider mb-0.5">SUSPENSE / THRILLER</span>
-                  <p className="text-xs font-bold text-white leading-tight">Sombras no Escuro</p>
+                {/* Poster 3 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?q=80&w=500&auto=format&fit=crop" 
+                    alt="Horizonte de Aventura" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">SUSPENSE / THRILLER</span>
+                    <p className="text-xs font-bold text-white leading-tight">Sombras no Escuro</p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Poster 4 */}
-              <div className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#E50914]/40 hover:scale-[1.03] transition-all duration-300">
-                <img 
-                  src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=500&auto=format&fit=crop" 
-                  alt="Noite de Estreia" 
-                  className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
-                  <span className="text-[9px] font-mono font-bold text-[#E50914] uppercase tracking-wider mb-0.5">CLÁSSICO / CINEMA</span>
-                  <p className="text-xs font-bold text-white leading-tight">Noite de Estreia</p>
+                {/* Poster 4 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=500&auto=format&fit=crop" 
+                    alt="Noite de Estreia" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">CLÁSSICO / CINEMA</span>
+                    <p className="text-xs font-bold text-white leading-tight">Noite de Estreia</p>
+                  </div>
                 </div>
-              </div>
 
+              </div>
+            </div>
+
+            {/* CATEGORY 2: JOGOS E DESPORTOS AO VIVO */}
+            <div className="px-6 sm:px-12 max-w-6xl mx-auto">
+              <h3 className="font-display font-black text-neutral-400 text-[11px] tracking-[0.25em] uppercase mb-6 flex items-center justify-between">
+                <span>JOGOS E FUTEBOL AO VIVO</span>
+                <span className="text-[9px] text-[#0052FF] font-mono tracking-wider">DIRETO</span>
+              </h3>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                
+                {/* Poster 1 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=500&auto=format&fit=crop" 
+                    alt="Futebol Europeu" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-3 left-3 bg-red-600 text-white text-[8px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-widest animate-pulse z-10">
+                    DIRETO
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">LIGA PORTUGUESA</span>
+                    <p className="text-xs font-bold text-white leading-tight">FC Porto vs Benfica</p>
+                  </div>
+                </div>
+
+                {/* Poster 2 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1579952362864-4643baf27166?q=80&w=500&auto=format&fit=crop" 
+                    alt="Champions League" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-3 left-3 bg-[#0052FF] text-white text-[8px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-widest z-10">
+                    HOJE
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">CHAMPIONS LEAGUE</span>
+                    <p className="text-xs font-bold text-white leading-tight">Real Madrid vs Man. City</p>
+                  </div>
+                </div>
+
+                {/* Poster 3 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1518063319789-7217e6706b04?q=80&w=500&auto=format&fit=crop" 
+                    alt="Angola Girabola" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-3 left-3 bg-red-600 text-white text-[8px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-widest animate-pulse z-10">
+                    DIRETO
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">GIRABOLA</span>
+                    <p className="text-xs font-bold text-white leading-tight">Petro de Luanda vs Sagrada</p>
+                  </div>
+                </div>
+
+                {/* Poster 4 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1546519638-68e109498ffc?q=80&w=500&auto=format&fit=crop" 
+                    alt="Basquetebol NBA" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">NBA BASKET</span>
+                    <p className="text-xs font-bold text-white leading-tight">Lakers vs Celtics</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* CATEGORY 3: CANAIS DE NOVELAS E DRAMAS */}
+            <div className="px-6 sm:px-12 max-w-6xl mx-auto">
+              <h3 className="font-display font-black text-neutral-400 text-[11px] tracking-[0.25em] uppercase mb-6 flex items-center justify-between">
+                <span>NOVELAS E GRANDES DRAMAS</span>
+                <span className="text-[9px] text-[#0052FF] font-mono tracking-wider">MAIS VISTAS</span>
+              </h3>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                
+                {/* Poster 1 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=500&auto=format&fit=crop" 
+                    alt="Intriga Familiar" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">TELENOVELA BRASILEIRA</span>
+                    <p className="text-xs font-bold text-white leading-tight">Segredos do Destino</p>
+                  </div>
+                </div>
+
+                {/* Poster 2 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?q=80&w=500&auto=format&fit=crop" 
+                    alt="Paixões Proibidas" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">DRAMA / CLÁSSICO</span>
+                    <p className="text-xs font-bold text-white leading-tight">Império de Elite</p>
+                  </div>
+                </div>
+
+                {/* Poster 3 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?q=80&w=500&auto=format&fit=crop" 
+                    alt="Caminhos do Amor" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">ROMANCE COBIÇADO</span>
+                    <p className="text-xs font-bold text-white leading-tight">Laços de Paixão</p>
+                  </div>
+                </div>
+
+                {/* Poster 4 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=500&auto=format&fit=crop" 
+                    alt="Mistério Intriga" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">SUSPENSE DRAMÁTICO</span>
+                    <p className="text-xs font-bold text-white leading-tight">Herança Oculta</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* CATEGORY 4: INFANTIL / DESENHOS ANIMADOS (BONECOS) */}
+            <div className="px-6 sm:px-12 max-w-6xl mx-auto">
+              <h3 className="font-display font-black text-neutral-400 text-[11px] tracking-[0.25em] uppercase mb-6 flex items-center justify-between">
+                <span>INFANTIL E DESENHOS ANIMADOS (BONECOS)</span>
+                <span className="text-[9px] text-[#0052FF] font-mono tracking-wider">CRIANÇAS</span>
+              </h3>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                
+                {/* Poster 1 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1608889174637-3c44f6326f20?q=80&w=500&auto=format&fit=crop" 
+                    alt="Aventura Espacial Desenho" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">BONECOS / ANIMAÇÃO 3D</span>
+                    <p className="text-xs font-bold text-white leading-tight">Super Amigos de Lata</p>
+                  </div>
+                </div>
+
+                {/* Poster 2 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1593085512500-5d55148d6f0d?q=80&w=500&auto=format&fit=crop" 
+                    alt="Monstros Divertidos" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">COMÉDIA / KIDS</span>
+                    <p className="text-xs font-bold text-white leading-tight">O Pequeno Amarelo</p>
+                  </div>
+                </div>
+
+                {/* Poster 3 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=500&auto=format&fit=crop" 
+                    alt="Magia e Fantasia" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">FANTASIA / MAGIA</span>
+                    <p className="text-xs font-bold text-white leading-tight">Caminho Encantado</p>
+                  </div>
+                </div>
+
+                {/* Poster 4 */}
+                <div onClick={() => setShowUnlockScreen(true)} className="group relative aspect-[2/3] bg-neutral-900 rounded-lg overflow-hidden border border-white/5 cursor-pointer shadow-lg hover:border-[#0052FF]/40 hover:scale-[1.03] transition-all duration-300">
+                  <img 
+                    src="https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=500&auto=format&fit=crop" 
+                    alt="Heróis em Ação" 
+                    className="w-full h-full object-cover group-hover:brightness-110 transition-all duration-300"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/10 to-transparent flex flex-col justify-end p-4">
+                    <span className="text-[9px] font-mono font-bold text-[#0052FF] uppercase tracking-wider mb-0.5">AVENTURA / HEROIS</span>
+                    <p className="text-xs font-bold text-white leading-tight">Defensores do Amanhã</p>
+                  </div>
+                </div>
+
+              </div>
             </div>
 
             {/* Netflix-style footer original credits line */}
             <div className="mt-16 flex items-center justify-center space-x-3 text-neutral-600">
-              <span className="text-2xl font-black text-[#E50914] tracking-tighter">M</span>
+              <span className="text-2xl font-black text-[#0052FF] tracking-tighter">M</span>
               <span className="text-[10px] font-bold tracking-[0.25em] uppercase font-mono">
                 ORIGINAL MOVIZ TV desde 2024
               </span>
@@ -736,7 +954,7 @@ export default function App() {
 
     // SECURITY UNLOCK SCREEN
     return (
-      <div className="relative min-h-screen bg-[#000000] text-white flex flex-col justify-center items-center px-6 py-12 overflow-x-hidden font-sans selection:bg-[#E50914]/30">
+      <div className="relative min-h-screen bg-[#000000] text-white flex flex-col justify-center items-center px-6 py-12 overflow-x-hidden font-sans selection:bg-[#0052FF]/30">
         
         {/* BACK TO LANDING PAGE BUTTON */}
         <button
