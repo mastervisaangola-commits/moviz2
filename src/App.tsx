@@ -28,7 +28,8 @@ import {
   Search,
   Bell,
   ThumbsUp,
-  ThumbsDown
+  ThumbsDown,
+  Users
 } from 'lucide-react';
 
 // --- MODULAR LOGO COMPONENT ---
@@ -215,6 +216,8 @@ export default function App() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showUnlockScreen, setShowUnlockScreen] = useState<boolean>(false);
   const [showCheckoutModal, setShowCheckoutModal] = useState<boolean>(false);
+  const [showResellerModal, setShowResellerModal] = useState<boolean>(false);
+  const [hasAcceptedPolicies, setHasAcceptedPolicies] = useState<boolean>(false);
 
   // Navigation & Screen states
   const [showSplash, setShowSplash] = useState<boolean>(true);
@@ -557,6 +560,121 @@ export default function App() {
     </AnimatePresence>
   );
 
+  // Render Reseller Policies Modal
+  const renderResellerModal = () => (
+    <AnimatePresence>
+      {showResellerModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md">
+          {/* Backdrop Click-to-Dismiss */}
+          <div className="absolute inset-0 bg-black/40" onClick={() => setShowResellerModal(false)} />
+          
+          {/* Modal Container */}
+          <motion.div 
+            className="relative w-full max-w-lg bg-[#0d0d0e] border border-white/10 rounded-2xl overflow-hidden z-10 flex flex-col shadow-2xl max-h-[90vh]"
+            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Modal header */}
+            <div className="flex items-center justify-between px-6 py-4 bg-[#121214] border-b border-white/5 shrink-0">
+              <div className="flex items-center space-x-2.5">
+                <Users className="text-[#0052FF]" size={18} />
+                <span className="text-xs font-bold font-display text-white tracking-wider uppercase">Políticas de Revenda – Moviz TV</span>
+              </div>
+              <button 
+                onClick={() => setShowResellerModal(false)}
+                className="text-neutral-400 hover:text-white bg-white/5 hover:bg-white/10 p-1.5 rounded-full transition-all cursor-pointer"
+              >
+                <X size={16} />
+              </button>
+            </div>
+            
+            {/* Scrollable Content containing policies */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-5 text-neutral-300 text-xs leading-relaxed font-sans select-none">
+              <div className="bg-[#0052FF]/5 border border-[#0052FF]/10 rounded-xl p-4 flex items-start space-x-3 mb-2">
+                <div className="w-8 h-8 rounded-lg bg-[#0052FF]/10 flex items-center justify-center shrink-0 border border-[#0052FF]/20">
+                  <span className="font-display font-black text-[#0052FF] text-xs">80%</span>
+                </div>
+                <div>
+                  <h4 className="font-bold text-white text-xs mb-0.5">Comissão de 80% por Venda</h4>
+                  <p className="text-[11px] text-neutral-400 font-mono">Ganhe 80% de comissão direta por cada venda indicada do nosso serviço!</p>
+                </div>
+              </div>
+
+              <p className="text-neutral-400 font-medium">
+                Para fazer parte do Programa de Revendedores da <strong className="text-white">Moviz TV</strong>, é necessário cumprir as seguintes políticas:
+              </p>
+
+              <ol className="space-y-4 list-decimal pl-4 text-neutral-300">
+                <li className="pl-1">
+                  Ter <strong className="text-white">16 anos de idade ou mais</strong>.
+                </li>
+                <li className="pl-1">
+                  Ser <strong className="text-white">utilizador ativo da Moviz TV</strong>, com uma assinatura válida da plataforma.
+                </li>
+                <li className="pl-1">
+                  Tratar todos os clientes com respeito, ética e profissionalismo durante todo o processo de venda e pós-venda.
+                </li>
+                <li className="pl-1">
+                  Não divulgar informações falsas nem fazer promessas que a plataforma não possa cumprir.
+                </li>
+                <li className="pl-1">
+                  Respeitar os preços, campanhas promocionais e políticas comerciais definidas pela empresa.
+                </li>
+                <li className="pl-1">
+                  Não utilizar spam, contas falsas ou qualquer prática considerada abusiva para conseguir clientes.
+                </li>
+                <li className="pl-1">
+                  Preservar a boa imagem da <strong className="text-white">Moviz TV</strong> e da empresa responsável pela revenda em todas as comunicações e divulgações.
+                </li>
+                <li className="pl-1">
+                  A empresa reserva-se o direito de suspender ou cancelar o acesso de qualquer revendedor que viole estas políticas ou pratique ações que prejudiquem clientes, parceiros ou o programa de revenda.
+                </li>
+              </ol>
+            </div>
+
+            {/* Footer with acceptance check and confirm button */}
+            <div className="p-6 bg-[#121214] border-t border-white/5 space-y-4 shrink-0">
+              <label className="flex items-start space-x-3 cursor-pointer group select-none">
+                <input 
+                  type="checkbox"
+                  checked={hasAcceptedPolicies}
+                  onChange={(e) => setHasAcceptedPolicies(e.target.checked)}
+                  className="mt-0.5 rounded border-white/10 bg-black text-[#0052FF] focus:ring-[#0052FF]/30 h-4 w-4 transition-colors cursor-pointer"
+                />
+                <span className="text-[11px] text-neutral-400 group-hover:text-neutral-200 transition-colors leading-snug">
+                  Confirmo que li, compreendi e aceito na íntegra as Políticas de Revenda da Moviz TV acima descritas.
+                </span>
+              </label>
+
+              {hasAcceptedPolicies ? (
+                <a
+                  href="http://vanqir.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setShowResellerModal(false)}
+                  className="w-full flex items-center justify-center space-x-2 bg-gradient-to-r from-[#0052FF] to-[#0039B3] text-white font-bold py-3.5 px-6 rounded-xl text-xs tracking-wider uppercase font-display select-none cursor-pointer hover:brightness-110 active:scale-[0.99] transition-all duration-200 text-center"
+                >
+                  <span>Confirmar</span>
+                  <ChevronRight size={14} />
+                </a>
+              ) : (
+                <button
+                  disabled
+                  className="w-full flex items-center justify-center space-x-2 bg-neutral-800 text-neutral-500 font-bold py-3.5 px-6 rounded-xl text-xs tracking-wider uppercase font-display cursor-not-allowed border border-white/5"
+                >
+                  <span>Confirmar</span>
+                  <ChevronRight size={14} />
+                </button>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+
   if (!isUnlocked) {
     if (!showUnlockScreen) {
       // PREMIUM MINIMALIST SALES LANDING PAGE (Netflix Inspired Layout but with Blue branding)
@@ -576,6 +694,7 @@ export default function App() {
                 <span className="hover:text-white transition-colors cursor-pointer">SERIES</span>
                 <span className="hover:text-white transition-colors cursor-pointer">PELICULAS</span>
                 <span className="hover:text-white transition-colors cursor-pointer">NOVEDADES</span>
+                <span onClick={() => setShowResellerModal(true)} className="hover:text-[#0052FF] transition-colors cursor-pointer text-neutral-400 font-extrabold">REVENDER</span>
               </nav>
             </div>
 
@@ -584,6 +703,13 @@ export default function App() {
               <Search size={18} className="cursor-pointer hover:text-white transition-colors" />
               <Bell size={18} className="cursor-pointer hover:text-white transition-colors" />
               
+              <button 
+                onClick={() => setShowResellerModal(true)}
+                className="text-[11px] font-extrabold text-neutral-400 hover:text-[#0052FF] transition-all tracking-wider cursor-pointer font-display"
+              >
+                REVENDER
+              </button>
+
               <button 
                 onClick={() => setShowUnlockScreen(true)}
                 className="bg-[#0052FF] text-white text-xs font-bold px-4 py-2 rounded-md hover:brightness-110 active:scale-[0.97] transition-all cursor-pointer font-display tracking-wider"
@@ -627,7 +753,7 @@ export default function App() {
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 items-center">
                 {/* REPRODUCIR / COMEÇAR AGORA BUTTON */}
                 <button
                   onClick={() => setShowUnlockScreen(true)}
@@ -644,6 +770,15 @@ export default function App() {
                 >
                   <Plus size={16} />
                   <span>ADQUIRIR ACESSO</span>
+                </button>
+
+                {/* RESELLER BUTTON - SMALL, BARELY VISIBLE BUT ELEGANT */}
+                <button
+                  onClick={() => setShowResellerModal(true)}
+                  className="flex items-center space-x-2 bg-transparent text-neutral-400 hover:text-white border border-white/10 hover:border-white/30 hover:bg-white/5 py-3.5 px-5 rounded-md active:scale-[0.98] transition-all duration-200 cursor-pointer text-xs font-bold tracking-wider uppercase font-display"
+                >
+                  <Users size={14} className="text-[#0052FF]" />
+                  <span>REVENDER (80% COMISSÃO)</span>
                 </button>
               </div>
             </div>
@@ -946,6 +1081,9 @@ export default function App() {
           {/* Secure embedded payment checkout modal */}
           {renderCheckoutModal()}
 
+          {/* Reseller policies modal */}
+          {renderResellerModal()}
+
           {/* Universal step guide modal */}
           {renderIosGuideModal()}
         </div>
@@ -1088,6 +1226,23 @@ export default function App() {
             </button>
           </motion.div>
 
+          {/* BECOME A RESELLER ON LOCK SCREEN */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.28, duration: 0.6 }}
+            className="w-full mb-6"
+          >
+            <button
+              type="button"
+              onClick={() => setShowResellerModal(true)}
+              className="w-full flex items-center justify-center space-x-3 bg-[#121212]/95 hover:bg-[#161618] border border-white/5 hover:border-[#0052FF]/30 text-neutral-300 hover:text-white font-bold py-4 px-6 rounded-2xl shadow-xl active:scale-[0.98] transition-all duration-200 cursor-pointer text-xs tracking-wider font-display uppercase"
+            >
+              <Users size={16} className="text-[#0052FF]" />
+              <span>Seja um Revendedor (80% Comissão)</span>
+            </button>
+          </motion.div>
+
           {/* Unified PWA Persistent Installation Zone on Lock Screen */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -1142,6 +1297,9 @@ export default function App() {
 
         {/* Embedded checkout portal for fast access */}
         {renderCheckoutModal()}
+
+        {/* Reseller policies modal */}
+        {renderResellerModal()}
 
         {/* Modal is also rendered in the locked context for instant visual support */}
         {renderIosGuideModal()}
